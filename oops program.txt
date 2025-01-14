@@ -1,0 +1,1364 @@
+Q) Write a C++ Program to display Names, Roll No., and grades of 3 students who have
+appeared in the examination. Declare the class of name, Roll No. and grade. Create an array
+of class objects. Read and display the contents of the array
+
+
+Ans:
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Class to store student details
+class Student {
+private:
+    string name;
+    int rollNo;
+    char grade;
+
+public:
+    // Method to read student details
+    void readDetails() {
+        cout << "Enter Name: ";
+        cin.ignore(); // To handle any newline characters in the input buffer
+        getline(cin, name);
+        cout << "Enter Roll No: ";
+        cin >> rollNo;
+        cout << "Enter Grade: ";
+        cin >> grade;
+    }
+
+    // Method to display student details
+    void displayDetails() const {
+        cout << "Name: " << name << ", Roll No: " << rollNo << ", Grade: " << grade << endl;
+    }
+};
+
+int main() {
+    const int numStudents = 3; // Number of students
+    Student students[numStudents]; // Array of Student objects
+
+    // Reading details for each student
+    cout << "Enter details for " << numStudents << " students:\n";
+    for (int i = 0; i < numStudents; ++i) {
+        cout << "Student " << i + 1 << ":\n";
+        students[i].readDetails();
+    }
+
+    // Displaying the details of each student
+    cout << "\nDisplaying details of students:\n";
+    for (int i = 0; i < numStudents; ++i) {
+        cout << "Student " << i + 1 << ":\n";
+        students[i].displayDetails();
+    }
+
+    return 0;
+}
+
+
+
+Write a C++ program to declare Struct. Initialize and display contents of member variables
+
+
+Ans
+
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define a struct to store student details
+struct Student {
+    string name;
+    int rollNo;
+    char grade;
+};
+
+int main() {
+    // Declare and initialize a Student struct
+    Student student1 = {"Alice", 101, 'A'};
+    Student student2 = {"Bob", 102, 'B'};
+    Student student3 = {"Charlie", 103, 'A'};
+
+    // Display the contents of the struct members
+    cout << "Displaying Student Details:\n";
+    
+    cout << "Student 1:\n";
+    cout << "Name: " << student1.name << "\n";
+    cout << "Roll No: " << student1.rollNo << "\n";
+    cout << "Grade: " << student1.grade << "\n\n";
+
+    cout << "Student 2:\n";
+    cout << "Name: " << student2.name << "\n";
+    cout << "Roll No: " << student2.rollNo << "\n";
+    cout << "Grade: " << student2.grade << "\n\n";
+
+    cout << "Student 3:\n";
+    cout << "Name: " << student3.name << "\n";
+    cout << "Roll No: " << student3.rollNo << "\n";
+    cout << "Grade: " << student3.grade << "\n";
+
+    return 0;
+}
+
+
+
+Write a C++ program to declare a class. Declare pointer to class. Initialize and display the
+contents of the class member
+
+Ans
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define a struct to store student details
+struct Student {
+    string name;
+    int rollNo;
+    char grade;
+};
+
+int main() {
+    // Declare and initialize a Student struct
+    Student student1 = {"Alice", 101, 'A'};
+    Student student2 = {"Bob", 102, 'B'};
+    Student student3 = {"Charlie", 103, 'A'};
+
+    // Display the contents of the struct members
+    cout << "Displaying Student Details:\n";
+    
+    cout << "Student 1:\n";
+    cout << "Name: " << student1.name << "\n";
+    cout << "Roll No: " << student1.rollNo << "\n";
+    cout << "Grade: " << student1.grade << "\n\n";
+
+    cout << "Student 2:\n";
+    cout << "Name: " << student2.name << "\n";
+    cout << "Roll No: " << student2.rollNo << "\n";
+    cout << "Grade: " << student2.grade << "\n\n";
+
+    cout << "Student 3:\n";
+    cout << "Name: " << student3.name << "\n";
+    cout << "Roll No: " << student3.rollNo << "\n";
+    cout << "Grade: " << student3.grade << "\n";
+
+    return 0;
+}
+
+
+
+Given that an EMPLOYEE class contains following members: data members: Employee
+number, Employee name, Basic, DA, IT, Net Salary and print data members
+
+Ans
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define the EMPLOYEE class
+class EMPLOYEE {
+private:
+    int empNumber;
+    string empName;
+    float basicSalary;
+    float DA;        // Dearness Allowance
+    float IT;        // Income Tax
+    float netSalary;
+
+public:
+    // Method to input employee details
+    void inputDetails() {
+        cout << "Enter Employee Number: ";
+        cin >> empNumber;
+        cin.ignore(); // Clear input buffer
+        cout << "Enter Employee Name: ";
+        getline(cin, empName);
+        cout << "Enter Basic Salary: ";
+        cin >> basicSalary;
+
+        // Calculate DA as 80% of Basic Salary
+        DA = 0.8 * basicSalary;
+
+        // Calculate IT as 10% of (Basic Salary + DA)
+        IT = 0.1 * (basicSalary + DA);
+
+        // Calculate Net Salary
+        netSalary = basicSalary + DA - IT;
+    }
+
+    // Method to display employee details
+    void displayDetails() const {
+        cout << "\nEmployee Details:\n";
+        cout << "Employee Number: " << empNumber << "\n";
+        cout << "Employee Name: " << empName << "\n";
+        cout << "Basic Salary: " << basicSalary << "\n";
+        cout << "DA (Dearness Allowance): " << DA << "\n";
+        cout << "IT (Income Tax): " << IT << "\n";
+        cout << "Net Salary: " << netSalary << "\n";
+    }
+};
+
+int main() {
+    EMPLOYEE emp; // Create an object of the EMPLOYEE class
+
+    // Input and display employee details
+    emp.inputDetails();
+    emp.displayDetails();
+
+    return 0;
+}
+
+
+Write a C++ program to read the data of N employee and compute Net salary of each
+employee (DA=52% of Basic and Income Tax (IT) =30% of the gross salary).
+
+Ans
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define the EMPLOYEE class
+class EMPLOYEE {
+private:
+    int empNumber;
+    string empName;
+    float basicSalary;
+    float DA;        // Dearness Allowance
+    float IT;        // Income Tax
+    float netSalary;
+
+public:
+    // Method to input employee details
+    void inputDetails() {
+        cout << "Enter Employee Number: ";
+        cin >> empNumber;
+        cin.ignore(); // Clear input buffer
+        cout << "Enter Employee Name: ";
+        getline(cin, empName);
+        cout << "Enter Basic Salary: ";
+        cin >> basicSalary;
+
+        // Calculate DA as 80% of Basic Salary
+        DA = 0.8 * basicSalary;
+
+        // Calculate IT as 10% of (Basic Salary + DA)
+        IT = 0.1 * (basicSalary + DA);
+
+        // Calculate Net Salary
+        netSalary = basicSalary + DA - IT;
+    }
+
+    // Method to display employee details
+    void displayDetails() const {
+        cout << "\nEmployee Details:\n";
+        cout << "Employee Number: " << empNumber << "\n";
+        cout << "Employee Name: " << empName << "\n";
+        cout << "Basic Salary: " << basicSalary << "\n";
+        cout << "DA (Dearness Allowance): " << DA << "\n";
+        cout << "IT (Income Tax): " << IT << "\n";
+        cout << "Net Salary: " << netSalary << "\n";
+    }
+};
+
+int main() {
+    EMPLOYEE emp; // Create an object of the EMPLOYEE class
+
+    // Input and display employee details
+    emp.inputDetails();
+    emp.displayDetails();
+
+    return 0;
+}
+
+
+Write a C++ to illustrate the concepts of console I/O operations
+
+
+Ans
+
+#include <iostream>
+#include <iomanip> // For I/O manipulators
+using namespace std;
+
+int main() {
+    int age;
+    string name;
+    double salary;
+
+    // Input: Read data from the console
+    cout << "Enter your name: ";
+    getline(cin, name); // Read a full line for the name
+
+    cout << "Enter your age: ";
+    cin >> age;
+
+    cout << "Enter your salary: ";
+    cin >> salary;
+
+    // Output: Display data with formatting
+    cout << "\n--- Displaying User Details ---\n";
+    cout << "Name: " << name << "\n";
+    cout << "Age: " << age << "\n";
+
+    // Formatting salary output with fixed and precision
+    cout << "Salary: " << fixed << setprecision(2) << salary << "\n";
+
+    // Demonstrating alignment with manipulators
+    cout << "\n--- Demonstrating Formatting ---\n";
+    cout << left << setw(15) << "Field" << right << setw(20) << "Value\n";
+    cout << setfill('-') << setw(35) << "-" << "\n"; // Line separator
+
+    cout << setfill(' ') << left << setw(15) << "Name" << right << setw(20) << name << "\n";
+    cout << left << setw(15) << "Age" << right << setw(20) << age << "\n";
+    cout << left << setw(15) << "Salary" << right << setw(20) << fixed << setprecision(2) << salary << "\n";
+
+    return 0;
+}
+
+
+Write a C++ program to use scope resolution operator. Display the various values of the same
+variables declared at different scope levels.
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Global variable
+int num = 100;
+
+class Example {
+private:
+    int num; // Class-level variable
+
+public:
+    Example(int n) {
+        num = n; // Assigning value to the class-level variable
+    }
+
+    void display(int num) { // Local variable
+        cout << "Local variable (inside display function): " << num << "\n";
+        cout << "Class-level variable (using this->num): " << this->num << "\n";
+        cout << "Global variable (using ::num): " << ::num << "\n";
+    }
+};
+
+int main() {
+    int num = 50; // Local variable in main
+    Example obj(25);
+
+    cout << "Local variable in main: " << num << "\n";
+    cout << "Global variable: " << ::num << "\n";
+
+    cout << "\nCalling display method:\n";
+    obj.display(10); // Passing a local variable to the method
+
+    return 0;
+}
+
+
+Write a C++ program to allocate memory using new operator
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Allocate memory for an integer using the new operator
+    int* ptr = new int; // Dynamically allocated memory for one integer
+
+    // Assign a value to the allocated memory
+    *ptr = 42;
+
+    // Display the value and address of the dynamically allocated memory
+    cout << "Value of the dynamically allocated integer: " << *ptr << "\n";
+    cout << "Address of the dynamically allocated memory: " << ptr << "\n";
+
+    // Free the allocated memory
+    delete ptr;
+
+    // Allocate memory for an array of integers using the new operator
+    int size;
+    cout << "\nEnter the number of elements in the array: ";
+    cin >> size;
+
+    int* arr = new int[size]; // Dynamically allocate memory for an array
+
+    // Input and display elements of the array
+    cout << "Enter " << size << " elements:\n";
+    for (int i = 0; i < size; ++i) {
+        cin >> arr[i];
+    }
+
+    cout << "Array elements are: ";
+    for (int i = 0; i < size; ++i) {
+        cout << arr[i] << " ";
+    }
+    cout << "\n";
+
+    // Free the allocated memory for the array
+    delete[] arr;
+
+    return 0;
+}
+
+
+Write a C++ program to create multilevel inheritance. (Hint: Classes A1, A2, A3)
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Base class A1
+class A1 {
+protected:
+    int a;
+
+public:
+    A1() {
+        a = 10;
+    }
+
+    void displayA1() {
+        cout << "Value of a in A1: " << a << endl;
+    }
+};
+
+// Derived class A2 from A1
+class A2 : public A1 {
+protected:
+    int b;
+
+public:
+    A2() {
+        b = 20;
+    }
+
+    void displayA2() {
+        cout << "Value of b in A2: " << b << endl;
+    }
+};
+
+// Derived class A3 from A2
+class A3 : public A2 {
+private:
+    int c;
+
+public:
+    A3() {
+        c = 30;
+    }
+
+    void displayA3() {
+        cout << "Value of c in A3: " << c << endl;
+    }
+
+    void displayAll() {
+        displayA1(); // Calling base class A1 method
+        displayA2(); // Calling base class A2 method
+        displayA3(); // Calling A3 method
+    }
+};
+
+int main() {
+    A3 obj; // Create an object of class A3
+
+    // Display values of a, b, and c from all classes
+    obj.displayAll();
+
+    return 0;
+}
+
+
+Write a C++ program to create an array of pointers. Invoke functions using array objects
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Base {
+public:
+    // Function to display a message
+    void displayMessage() {
+        cout << "Hello from Base class!" << endl;
+    }
+
+    // Function to calculate and display the square of a number
+    void square(int num) {
+        cout << "Square of " << num << " is " << num * num << endl;
+    }
+};
+
+int main() {
+    // Creating an array of pointers to Base class objects
+    Base* arr[3]; 
+
+    // Dynamically allocating memory for objects and assigning pointers
+    for (int i = 0; i < 3; ++i) {
+        arr[i] = new Base();  // Allocating memory for each object
+    }
+
+    // Invoking functions using the array of objects (pointers)
+    for (int i = 0; i < 3; ++i) {
+        cout << "Calling function for object " << i + 1 << ":" << endl;
+        arr[i]->displayMessage(); // Invoking displayMessage
+        arr[i]->square(i + 1);    // Invoking square with index value
+        cout << endl;
+    }
+
+    // Deleting dynamically allocated memory
+    for (int i = 0; i < 3; ++i) {
+        delete arr[i];  // Deleting each dynamically allocated object
+    }
+
+    return 0;
+}
+
+
+Write a C++ program to use pointer for both base and derived classes and call the member
+function. Use Virtual keyword
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Base {
+public:
+    // Virtual function to display message
+    virtual void displayMessage() {
+        cout << "Base class displayMessage function called!" << endl;
+    }
+
+    // Virtual destructor to ensure proper cleanup of derived objects
+    virtual ~Base() {
+        cout << "Base class destructor called!" << endl;
+    }
+};
+
+// Derived class
+class Derived : public Base {
+public:
+    // Overriding displayMessage function in the derived class
+    void displayMessage() override {
+        cout << "Derived class displayMessage function called!" << endl;
+    }
+
+    // Destructor for derived class
+    ~Derived() {
+        cout << "Derived class destructor called!" << endl;
+    }
+};
+
+int main() {
+    // Create a base class pointer and assign it to a derived class object
+    Base* basePtr;
+
+    // Creating an object of the Derived class
+    Derived derivedObj;
+
+    // Pointing the base class pointer to the derived class object
+    basePtr = &derivedObj;
+
+    // Calling the displayMessage function using the base class pointer
+    basePtr->displayMessage();  // This will call the Derived class function due to virtual function
+
+    return 0;
+}
+
+
+Implement a class Complex which represents the Complex Number data type. Implement the
+following operations: 1. Constructor (including a default constructor which creates the
+complex number0+0i). 2. Overloaded operator+ to add two complex numbers. 3. Overloaded
+operator* to multiply two complex numbers. 4. Overloaded << and >> to print and read
+Complex Numbers.
+
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+class Complex {
+private:
+    double real, imag;  // Real and imaginary parts of the complex number
+
+public:
+    // Default constructor (creates complex number 0 + 0i)
+    Complex() : real(0), imag(0) {}
+
+    // Parameterized constructor
+    Complex(double r, double i) : real(r), imag(i) {}
+
+    // Overloaded + operator to add two complex numbers
+    Complex operator+(const Complex& other) {
+        return Complex(real + other.real, imag + other.imag);
+    }
+
+    // Overloaded * operator to multiply two complex numbers
+    Complex operator*(const Complex& other) {
+        double r = real * other.real - imag * other.imag;
+        double i = real * other.imag + imag * other.real;
+        return Complex(r, i);
+    }
+
+    // Overloaded << operator to print the complex number
+    friend ostream& operator<<(ostream& os, const Complex& c) {
+        os << c.real;
+        if (c.imag >= 0) {
+            os << " + " << c.imag << "i";
+        } else {
+            os << " - " << -c.imag << "i";
+        }
+        return os;
+    }
+
+    // Overloaded >> operator to read the complex number
+    friend istream& operator>>(istream& is, Complex& c) {
+        is >> c.real >> c.imag;
+        return is;
+    }
+};
+
+int main() {
+    Complex c1, c2, result;
+    
+    cout << "Enter the first complex number (real and imaginary parts): ";
+    cin >> c1;  // Input using overloaded >>
+    
+    cout << "Enter the second complex number (real and imaginary parts): ";
+    cin >> c2;  // Input using overloaded >>
+
+    // Adding the two complex numbers using overloaded +
+    result = c1 + c2;
+    cout << "Sum: " << result << endl;  // Output using overloaded <<
+
+    // Multiplying the two complex numbers using overloaded *
+    result = c1 * c2;
+    cout << "Product: " << result << endl;  // Output using overloaded <<
+
+    return 0;
+}
+
+
+Implement a class Quadratic that represents degree two polynomials i.e., polynomials of
+type ax2+bx+c. The class will require three data members corresponding to a, b and c.
+Implement the following operations: 1. A constructor (including a default constructor which
+creates the 0polynomial). 2. Overloaded operator+ to add two polynomials of degree2. 3.
+Overloaded << and >> to print and read polynomials. To do this, you will need to decide what
+you want your input and output format to looklike. 4. A function eval that computes the
+value of a polynomial for a given value ofx. 5. A function that computes the two solutions of
+the equationax2+bx+c=0
+
+
+Ans
+
+
+#include <iostream>
+#include <cmath>  // For sqrt()
+using namespace std;
+
+class Quadratic {
+private:
+    double a, b, c;  // Coefficients of the polynomial
+
+public:
+    // Default constructor (0 polynomial)
+    Quadratic() : a(0), b(0), c(0) {}
+
+    // Parameterized constructor
+    Quadratic(double coef_a, double coef_b, double coef_c) : a(coef_a), b(coef_b), c(coef_c) {}
+
+    // Overloaded + operator to add two polynomials
+    Quadratic operator+(const Quadratic& other) {
+        return Quadratic(a + other.a, b + other.b, c + other.c);
+    }
+
+    // Overloaded << operator to print the polynomial
+    friend ostream& operator<<(ostream& os, const Quadratic& q) {
+        os << q.a << "x^2 ";
+        if (q.b >= 0) os << "+ " << q.b << "x ";
+        else os << "- " << -q.b << "x ";
+        if (q.c >= 0) os << "+ " << q.c;
+        else os << "- " << -q.c;
+        return os;
+    }
+
+    // Overloaded >> operator to read the polynomial
+    friend istream& operator>>(istream& is, Quadratic& q) {
+        is >> q.a >> q.b >> q.c;
+        return is;
+    }
+
+    // Function to evaluate the polynomial for a given value of x
+    double eval(double x) {
+        return a * x * x + b * x + c;
+    }
+
+    // Function to find the solutions to the quadratic equation ax^2 + bx + c = 0
+    void findSolutions() {
+        double discriminant = b * b - 4 * a * c;
+        
+        if (discriminant > 0) {
+            double root1 = (-b + sqrt(discriminant)) / (2 * a);
+            double root2 = (-b - sqrt(discriminant)) / (2 * a);
+            cout << "The solutions are: x1 = " << root1 << " and x2 = " << root2 << endl;
+        }
+        else if (discriminant == 0) {
+            double root = -b / (2 * a);
+            cout << "There is one solution: x = " << root << endl;
+        }
+        else {
+            cout << "No real solutions exist." << endl;
+        }
+    }
+};
+
+int main() {
+    Quadratic q1, q2, sum;
+
+    // Read two polynomials from the user
+    cout << "Enter the first quadratic polynomial (a, b, c): ";
+    cin >> q1;
+
+    cout << "Enter the second quadratic polynomial (a, b, c): ";
+    cin >> q2;
+
+    // Adding two polynomials
+    sum = q1 + q2;
+    cout << "The sum of the two polynomials is: " << sum << endl;
+
+    // Evaluate the first polynomial at x = 2
+    double x;
+    cout << "Enter a value for x to evaluate the first polynomial: ";
+    cin >> x;
+    cout << "Value of the first polynomial at x = " << x << " is: " << q1.eval(x) << endl;
+
+    // Find the solutions to the quadratic equation of the first polynomial
+    cout << "Finding solutions for the equation " << q1 << " = 0" << endl;
+    q1.findSolutions();
+
+    return 0;
+}
+
+
+
+Implement a class CppArray which is identical to a one-dimensional C++ array (i.e., the index set is a set of consecutive integers starting at 0) except for the following :
+ 1. It performs range checking.
+ 2. It allows one to be assigned to another array through the use of the assignment
+operator (e.g. cp1=cp2) 
+3. It supports a function that returns the size of thearray.
+ 4. It allows the reading or printing of array through the use of coutandcin
+
+
+Ans
+
+
+#include <iostream>
+#include <cmath>  // For sqrt()
+using namespace std;
+
+class Quadratic {
+private:
+    double a, b, c;  // Coefficients of the polynomial
+
+public:
+    // Default constructor (0 polynomial)
+    Quadratic() : a(0), b(0), c(0) {}
+
+    // Parameterized constructor
+    Quadratic(double coef_a, double coef_b, double coef_c) : a(coef_a), b(coef_b), c(coef_c) {}
+
+    // Overloaded + operator to add two polynomials
+    Quadratic operator+(const Quadratic& other) {
+        return Quadratic(a + other.a, b + other.b, c + other.c);
+    }
+
+    // Overloaded << operator to print the polynomial
+    friend ostream& operator<<(ostream& os, const Quadratic& q) {
+        os << q.a << "x^2 ";
+        if (q.b >= 0) os << "+ " << q.b << "x ";
+        else os << "- " << -q.b << "x ";
+        if (q.c >= 0) os << "+ " << q.c;
+        else os << "- " << -q.c;
+        return os;
+    }
+
+    // Overloaded >> operator to read the polynomial
+    friend istream& operator>>(istream& is, Quadratic& q) {
+        is >> q.a >> q.b >> q.c;
+        return is;
+    }
+
+    // Function to evaluate the polynomial for a given value of x
+    double eval(double x) {
+        return a * x * x + b * x + c;
+    }
+
+    // Function to find the solutions to the quadratic equation ax^2 + bx + c = 0
+    void findSolutions() {
+        double discriminant = b * b - 4 * a * c;
+        
+        if (discriminant > 0) {
+            double root1 = (-b + sqrt(discriminant)) / (2 * a);
+            double root2 = (-b - sqrt(discriminant)) / (2 * a);
+            cout << "The solutions are: x1 = " << root1 << " and x2 = " << root2 << endl;
+        }
+        else if (discriminant == 0) {
+            double root = -b / (2 * a);
+            cout << "There is one solution: x = " << root << endl;
+        }
+        else {
+            cout << "No real solutions exist." << endl;
+        }
+    }
+};
+
+int main() {
+    Quadratic q1, q2, sum;
+
+    // Read two polynomials from the user
+    cout << "Enter the first quadratic polynomial (a, b, c): ";
+    cin >> q1;
+
+    cout << "Enter the second quadratic polynomial (a, b, c): ";
+    cin >> q2;
+
+    // Adding two polynomials
+    sum = q1 + q2;
+    cout << "The sum of the two polynomials is: " << sum << endl;
+
+    // Evaluate the first polynomial at x = 2
+    double x;
+    cout << "Enter a value for x to evaluate the first polynomial: ";
+    cin >> x;
+    cout << "Value of the first polynomial at x = " << x << " is: " << q1.eval(x) << endl;
+
+    // Find the solutions to the quadratic equation of the first polynomial
+    cout << "Finding solutions for the equation " << q1 << " = 0" << endl;
+    q1.findSolutions();
+
+    return 0;
+}
+
+
+Write a C++ program create a calculator for an arithmetic operator (+, -, *, /). The program should take two operands from user and performs the operation on those two operands
+depending upon the operator entered by user. Use a switch statement to select the
+operation. Finally, display the result. Some sample interaction with the program might look
+like this: Enter first number, operator, second number: 10 / 3 Answer =3.333333 Do another
+(y/n)?y Enter first number, operator, second number: 12 + 100 Answer = 112 Do another
+(y/n)? n
+
+Ans
+
+
+#include <iostream>
+#include <stdexcept> // For throwing range check exceptions
+using namespace std;
+
+class CppArray {
+private:
+    int* arr;
+    int size;
+
+public:
+    // Constructor to initialize the array with a given size
+    CppArray(int s) : size(s) {
+        arr = new int[size]; // Allocate memory for the array
+    }
+
+    // Copy constructor for deep copy
+    CppArray(const CppArray& other) : size(other.size) {
+        arr = new int[size]; // Allocate memory
+        for (int i = 0; i < size; ++i) {
+            arr[i] = other.arr[i]; // Copy elements from the other array
+        }
+    }
+
+    // Assignment operator overload for assignment of one array to another
+    CppArray& operator=(const CppArray& other) {
+        if (this != &other) {
+            delete[] arr; // Free the current memory
+            size = other.size;
+            arr = new int[size]; // Allocate new memory
+            for (int i = 0; i < size; ++i) {
+                arr[i] = other.arr[i]; // Copy elements from the other array
+            }
+        }
+        return *this;
+    }
+
+    // Destructor to free the allocated memory
+    ~CppArray() {
+        delete[] arr;
+    }
+
+    // Function to perform range checking
+    int& operator[](int index) {
+        if (index < 0 || index >= size) {
+            throw out_of_range("Index out of range");
+        }
+        return arr[index];
+    }
+
+    // Constant version of operator[] for reading values
+    const int& operator[](int index) const {
+        if (index < 0 || index >= size) {
+            throw out_of_range("Index out of range");
+        }
+        return arr[index];
+    }
+
+    // Function to get the size of the array
+    int getSize() const {
+        return size;
+    }
+
+    // Function to read values into the array using cin
+    void input() {
+        for (int i = 0; i < size; ++i) {
+            cout << "Enter value for index " << i << ": ";
+            cin >> arr[i];
+        }
+    }
+
+    // Function to print the array using cout
+    void print() const {
+        cout << "[ ";
+        for (int i = 0; i < size; ++i) {
+            cout << arr[i] << " ";
+        }
+        cout << "]" << endl;
+    }
+};
+
+int main() {
+    // Create a CppArray with size 5
+    CppArray arr1(5);
+    
+    // Input values into the array
+    arr1.input();
+    
+    // Print the array
+    cout << "Array 1: ";
+    arr1.print();
+    
+    // Create another CppArray and assign arr1 to it
+    CppArray arr2(5);
+    arr2 = arr1;
+    
+    // Print the second array
+    cout << "Array 2 (after assignment from Array 1): ";
+    arr2.print();
+
+    // Accessing elements with range checking
+    try {
+        cout << "Element at index 2 of Array 1: " << arr1[2] << endl;
+        cout << "Element at index 10 of Array 1 (out of range): " << arr1[10] << endl; // This will throw an exception
+    } catch (const out_of_range& e) {
+        cout << "Error: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
+
+Create a class template to represent a generic vector. Include following member functions:
+To create the vector. To modify the value of a given element To multiply by a scalar value To
+display the vector in the form (10,20,30,…)
+
+
+Ans
+
+
+#include <iostream>
+#include <limits>  // For clearing the input buffer
+using namespace std;
+
+int main() {
+    double num1, num2, result;
+    char op;
+    char choice;
+
+    do {
+        // Take input from the user
+        cout << "Enter first number, operator, second number: ";
+        cin >> num1 >> op >> num2;
+
+        // Perform the operation using a switch statement
+        switch (op) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                // Handle division by zero
+                if (num2 != 0) {
+                    result = num1 / num2;
+                } else {
+                    cout << "Error: Division by zero!" << endl;
+                    continue;
+                }
+                break;
+            default:
+                cout << "Invalid operator!" << endl;
+                continue;
+        }
+
+        // Display the result
+        cout << "Answer = " << result << endl;
+
+        // Ask if the user wants to perform another calculation
+        cout << "Do another (y/n)? ";
+        cin >> choice;
+
+        // Clear the input buffer to avoid any leftover characters
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    } while (choice == 'y' || choice == 'Y');
+
+    cout << "Goodbye!" << endl;
+    return 0;
+}
+
+
+Write a function in C++ to count and display the number of lines not starting with alphabet
+'A' present in a text file "STORY.TXT". Example: If the file "STORY.TXT" contains the following
+lines, The roses are red. A girl is playing there. There is a playground. An aeroplane is in the
+sky. Numbers are not allowed in the password. The function should display the output as 3
+
+Ans
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+// Function to count lines not starting with 'A'
+void countLinesNotStartingWithA(const string& filename) {
+    ifstream file(filename); // Open the file
+    if (!file) {
+        cout << "Error opening file!" << endl;
+        return;
+    }
+
+    string line;
+    int count = 0; // Counter for lines not starting with 'A'
+
+    // Read each line from the file
+    while (getline(file, line)) {
+        // Check if the line is not empty and does not start with 'A'
+        if (!line.empty() && toupper(line[0]) != 'A') {
+            count++;
+        }
+    }
+
+    // Display the result
+    cout << "Number of lines not starting with 'A': " << count << endl;
+
+    file.close(); // Close the file
+}
+
+int main() {
+    // Name of the text file
+    string filename = "STORY.TXT";
+
+    // Call the function to count lines not starting with 'A'
+    countLinesNotStartingWithA(filename);
+
+    return 0;
+}
+
+
+Write C++ Program to display the cube of the number upto a given integer using constructor
+overloading.
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Class to calculate the cube of a number
+class CubeCalculator {
+public:
+    // Constructor to calculate the cube of the given number
+    CubeCalculator(int num) {
+        cout << "Cube of " << num << " is " << num * num * num << endl;
+    }
+
+    // Constructor to display the cubes of all numbers up to the given number
+    CubeCalculator() {
+        int num;
+        cout << "Enter a number: ";
+        cin >> num;
+        for (int i = 1; i <= num; ++i) {
+            cout << "Cube of " << i << " is " << i * i * i << endl;
+        }
+    }
+};
+
+int main() {
+    // Display the cubes of numbers up to a given integer using constructor overloading
+    CubeCalculator calc1;  // Calls the constructor that takes no argument and asks for a number
+    CubeCalculator calc2(4); // Calls the constructor that calculates cube of a specific number
+
+    return 0;
+}
+
+
+. Use virtual function to calculate area for different shapes C++.
+
+Ans
+
+
+#include <iostream>
+#include <cmath>  // For M_PI (π)
+using namespace std;
+
+// Base class Shape with a virtual function to calculate area
+class Shape {
+public:
+    // Virtual function to calculate area, to be overridden in derived classes
+    virtual double area() const {
+        return 0;
+    }
+
+    // Virtual destructor
+    virtual ~Shape() {}
+};
+
+// Derived class for Circle
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    // Constructor to initialize the radius
+    Circle(double r) : radius(r) {}
+
+    // Override the area function for Circle
+    double area() const override {
+        return M_PI * radius * radius;  // Area of a circle: π * r^2
+    }
+};
+
+// Derived class for Rectangle
+class Rectangle : public Shape {
+private:
+    double length, width;
+
+public:
+    // Constructor to initialize length and width
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Override the area function for Rectangle
+    double area() const override {
+        return length * width;  // Area of rectangle: length * width
+    }
+};
+
+// Derived class for Triangle
+class Triangle : public Shape {
+private:
+    double base, height;
+
+public:
+    // Constructor to initialize base and height
+    Triangle(double b, double h) : base(b), height(h) {}
+
+    // Override the area function for Triangle
+    double area() const override {
+        return 0.5 * base * height;  // Area of triangle: 0.5 * base * height
+    }
+};
+
+int main() {
+    // Create objects for different shapes
+    Shape* shape1 = new Circle(5.0);  // Circle with radius 5
+    Shape* shape2 = new Rectangle(4.0, 6.0);  // Rectangle with length 4 and width 6
+    Shape* shape3 = new Triangle(4.0, 3.0);  // Triangle with base 4 and height 3
+
+    // Display the areas of the shapes
+    cout << "Area of Circle: " << shape1->area() << endl;
+    cout << "Area of Rectangle: " << shape2->area() << endl;
+    cout << "Area of Triangle: " << shape3->area() << endl;
+
+    // Clean up dynamically allocated memory
+    delete shape1;
+    delete shape2;
+    delete shape3;
+
+    return 0;
+}
+
+
+Write a C++ program for Exception handling divide by zero using C++.
+
+Ans
+
+#include <iostream>
+#include <stdexcept>  // For standard exceptions
+using namespace std;
+
+// Function to perform division
+double divide(double numerator, double denominator) {
+    if (denominator == 0) {
+        throw runtime_error("Error: Division by zero is not allowed.");
+    }
+    return numerator / denominator;
+}
+
+int main() {
+    double num, denom;
+
+    // Input the numerator and denominator
+    cout << "Enter the numerator: ";
+    cin >> num;
+    cout << "Enter the denominator: ";
+    cin >> denom;
+
+    try {
+        // Try to perform the division
+        double result = divide(num, denom);
+        cout << "Result: " << result << endl;
+    } catch (const runtime_error& e) {
+        // Catch and display the error if division by zero occurs
+        cout << "Exception: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
+
+Write a C++ program to use pointer for both base and derived classes and call the member
+function. Use Virtual keyword.
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Base class
+class Base {
+public:
+    // Virtual function to display the message
+    virtual void display() {
+        cout << "Base class display function called." << endl;
+    }
+
+    // Virtual destructor to ensure proper cleanup of derived class objects
+    virtual ~Base() {
+        cout << "Base class destructor called." << endl;
+    }
+};
+
+// Derived class
+class Derived : public Base {
+public:
+    // Override the display function in derived class
+    void display() override {
+        cout << "Derived class display function called." << endl;
+    }
+
+    // Destructor for derived class
+    ~Derived() {
+        cout << "Derived class destructor called." << endl;
+    }
+};
+
+int main() {
+    // Create a pointer of type Base
+    Base* basePtr;
+
+    // Create an object of Derived class
+    Derived derivedObj;
+
+    // Point the Base class pointer to the Derived class object
+    basePtr = &derivedObj;
+
+    // Call the display function using the base class pointer
+    basePtr->display(); // This will call Derived class display function due to virtual function
+
+    // Delete the derived object using base class pointer (polymorphism)
+    delete basePtr;
+
+    return 0;
+}
+
+
+. Write a Program to find Maximum out of Two Numbers using friend function.
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Forward declaration of class
+class Max;
+
+// Friend function declaration
+int findMax(Max, Max);
+
+class Max {
+private:
+    int num;
+
+public:
+    // Constructor to initialize the number
+    Max(int n) : num(n) {}
+
+    // Friend function has access to private members
+    friend int findMax(Max, Max);
+
+    // Getter function to return the number
+    int getNum() const {
+        return num;
+    }
+};
+
+// Friend function definition to find the maximum of two numbers
+int findMax(Max obj1, Max obj2) {
+    if (obj1.num > obj2.num) {
+        return obj1.num; // Return the maximum number
+    } else {
+        return obj2.num; // Return the maximum number
+    }
+}
+
+int main() {
+    int num1, num2;
+
+    // Take input for two numbers
+    cout << "Enter first number: ";
+    cin >> num1;
+    cout << "Enter second number: ";
+    cin >> num2;
+
+    // Create two objects of Max class
+    Max obj1(num1), obj2(num2);
+
+    // Call the friend function to find the maximum
+    int maxVal = findMax(obj1, obj2);
+
+    // Display the maximum number
+    cout << "The maximum number is: " << maxVal << endl;
+
+    return 0;
+}
+
