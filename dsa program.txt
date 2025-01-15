@@ -1,0 +1,2125 @@
+1.	Write C/C++ program to store marks scored for first test of subject 'Data Structures and Algorithms' for N students. Compute
+i.	The average score of class.
+ii.	Highest score and lowest score of class.
+
+
+Ans
+
+
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int main() {
+    int N;
+
+    // Input number of students
+    cout << "Enter number of students: ";
+    cin >> N;
+
+    // Array to store marks
+    int marks[N];
+    
+    int sum = 0;
+    int highest = INT_MIN;
+    int lowest = INT_MAX;
+
+    // Input marks for each student and calculate sum, highest, and lowest
+    for (int i = 0; i < N; i++) {
+        cout << "Enter marks for student " << i + 1 << ": ";
+        cin >> marks[i];
+        
+        sum += marks[i];
+
+        if (marks[i] > highest) {
+            highest = marks[i];
+        }
+
+        if (marks[i] < lowest) {
+            lowest = marks[i];
+        }
+    }
+
+    // Calculate average score
+    double average = static_cast<double>(sum) / N;
+
+    // Output the results
+    cout << "Average score: " << average << endl;
+    cout << "Highest score: " << highest << endl;
+    cout << "Lowest score: " << lowest << endl;
+
+    return 0;
+}
+
+
+
+2.	Write a menu driven program to perform following operations on singly linked list: Create, Insert, Delete, and Display.
+
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+// Define the structure of a node
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Function to create a new node
+Node* createNode(int value) {
+    Node* newNode = new Node();
+    if (!newNode) {
+        cout << "Memory allocation failed." << endl;
+        exit(1);
+    }
+    newNode->data = value;
+    newNode->next = nullptr;
+    return newNode;
+}
+
+// Function to create a linked list
+Node* createList(Node* head) {
+    int n, value;
+    cout << "Enter the number of nodes: ";
+    cin >> n;
+
+    if (n == 0) return head;
+
+    cout << "Enter the value for node 1: ";
+    cin >> value;
+    head = createNode(value);
+
+    Node* temp = head;
+
+    for (int i = 2; i <= n; i++) {
+        cout << "Enter the value for node " << i << ": ";
+        cin >> value;
+        temp->next = createNode(value);
+        temp = temp->next;
+    }
+    return head;
+}
+
+// Function to insert a node
+Node* insertNode(Node* head, int value, int position) {
+    Node* newNode = createNode(value);
+
+    if (position == 1) { // Insert at the beginning
+        newNode->next = head;
+        head = newNode;
+    } else { // Insert at a specific position
+        Node* temp = head;
+        for (int i = 1; temp != nullptr && i < position - 1; i++) {
+            temp = temp->next;
+        }
+        if (temp == nullptr) {
+            cout << "Position out of range." << endl;
+        } else {
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
+    }
+    return head;
+}
+
+// Function to delete a node
+Node* deleteNode(Node* head, int position) {
+    if (head == nullptr) {
+        cout << "List is empty." << endl;
+        return head;
+    }
+
+    Node* temp = head;
+
+    if (position == 1) { // Delete the first node
+        head = head->next;
+        delete temp;
+    } else { // Delete a node at a specific position
+        Node* prev = nullptr;
+        for (int i = 1; temp != nullptr && i < position; i++) {
+            prev = temp;
+            temp = temp->next;
+        }
+        if (temp == nullptr) {
+            cout << "Position out of range." << endl;
+        } else {
+            prev->next = temp->next;
+            delete temp;
+        }
+    }
+    return head;
+}
+
+// Function to display the linked list
+void displayList(Node* head) {
+    if (head == nullptr) {
+        cout << "List is empty." << endl;
+        return;
+    }
+    Node* temp = head;
+    cout << "Linked list: ";
+    while (temp != nullptr) {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
+
+// Main function to handle the menu
+int main() {
+    Node* head = nullptr;
+    int choice, value, position;
+
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Create List" << endl;
+        cout << "2. Insert Node" << endl;
+        cout << "3. Delete Node" << endl;
+        cout << "4. Display List" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                head = createList(head);
+                break;
+            case 2:
+                cout << "Enter the value to insert: ";
+                cin >> value;
+                cout << "Enter the position to insert (1-based index): ";
+                cin >> position;
+                head = insertNode(head, value, position);
+                break;
+            case 3:
+                cout << "Enter the position to delete (1-based index): ";
+                cin >> position;
+                head = deleteNode(head, position);
+                break;
+            case 4:
+                displayList(head);
+                break;
+            case 5:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+
+3.	Write a program to implement abstract data type Stack (Push & Pop operation).
+
+
+Ans
+#include <iostream>
+using namespace std;
+
+class Stack {
+private:
+    int top;         // Index of the top element
+    int size;        // Maximum size of the stack
+    int* arr;        // Dynamic array to store stack elements
+
+public:
+    // Constructor to initialize stack
+    Stack(int s) {
+        size = s;
+        arr = new int[size];
+        top = -1;
+    }
+
+    // Destructor to free memory
+    ~Stack() {
+        delete[] arr;
+    }
+
+    // Push operation to add an element to the stack
+    void push(int value) {
+        if (top == size - 1) {
+            cout << "Stack Overflow! Cannot push " << value << "." << endl;
+            return;
+        }
+        arr[++top] = value;
+        cout << value << " pushed into the stack." << endl;
+    }
+
+    // Pop operation to remove the top element from the stack
+    int pop() {
+        if (top == -1) {
+            cout << "Stack Underflow! Cannot pop an element." << endl;
+            return -1;
+        }
+        cout << arr[top] << " popped from the stack." << endl;
+        return arr[top--];
+    }
+
+    // Display all elements in the stack
+    void display() {
+        if (top == -1) {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+        cout << "Stack elements: ";
+        for (int i = top; i >= 0; i--) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    int size, choice, value;
+
+    cout << "Enter the size of the stack: ";
+    cin >> size;
+
+    Stack stack(size);
+
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Push" << endl;
+        cout << "2. Pop" << endl;
+        cout << "3. Display Stack" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the value to push: ";
+                cin >> value;
+                stack.push(value);
+                break;
+            case 2:
+                stack.pop();
+                break;
+            case 3:
+                stack.display();
+                break;
+            case 4:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+4.	In any language program mostly syntax error occurs due to unbalancing delimiter such as (),{},[]. Write C/C++ program using stack to check whether given expression is well parenthesized or not
+
+
+Ans
+
+
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+// Function to check if two characters are matching pairs
+bool isMatchingPair(char open, char close) {
+    return (open == '(' && close == ')') ||
+           (open == '{' && close == '}') ||
+           (open == '[' && close == ']');
+}
+
+// Function to check if the given expression is well-parenthesized
+bool isWellParenthesized(const string& expression) {
+    stack<char> s;
+
+    for (char ch : expression) {
+        if (ch == '(' || ch == '{' || ch == '[') {
+            // Push opening delimiters onto the stack
+            s.push(ch);
+        } else if (ch == ')' || ch == '}' || ch == ']') {
+            // If stack is empty or no matching opening delimiter, it's unbalanced
+            if (s.empty() || !isMatchingPair(s.top(), ch)) {
+                return false;
+            }
+            // Pop the matching opening delimiter
+            s.pop();
+        }
+    }
+
+    // If the stack is empty, the expression is well-parenthesized
+    return s.empty();
+}
+
+int main() {
+    string expression;
+
+    cout << "Enter an expression: ";
+    cin >> expression;
+
+    if (isWellParenthesized(expression)) {
+        cout << "The expression is well-parenthesized." << endl;
+    } else {
+        cout << "The expression is not well-parenthesized." << endl;
+    }
+
+    return 0;
+}
+
+
+5.	Write a C/C++ program to convert infix to Postfix and prefix expression.
+
+Ans
+
+
+#include <iostream>
+#include <stack>
+#include <algorithm>
+using namespace std;
+
+// Function to check if a character is an operator
+bool isOperator(char ch) {
+    return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
+}
+
+// Function to get precedence of operators
+int precedence(char ch) {
+    if (ch == '^') return 3; // Exponentiation has the highest precedence
+    if (ch == '*' || ch == '/') return 2; // Multiplication and division
+    if (ch == '+' || ch == '-') return 1; // Addition and subtraction
+    return 0; // For other characters (like parentheses)
+}
+
+// Function to convert infix to postfix
+string infixToPostfix(const string& infix) {
+    stack<char> s;
+    string postfix;
+
+    for (char ch : infix) {
+        if (isalnum(ch)) {
+            // If operand, add to postfix expression
+            postfix += ch;
+        } else if (ch == '(') {
+            // Push opening parenthesis onto the stack
+            s.push(ch);
+        } else if (ch == ')') {
+            // Pop from stack until opening parenthesis is found
+            while (!s.empty() && s.top() != '(') {
+                postfix += s.top();
+                s.pop();
+            }
+            s.pop(); // Remove the opening parenthesis
+        } else if (isOperator(ch)) {
+            // Pop operators from the stack with higher or equal precedence
+            while (!s.empty() && precedence(s.top()) >= precedence(ch)) {
+                postfix += s.top();
+                s.pop();
+            }
+            // Push the current operator onto the stack
+            s.push(ch);
+        }
+    }
+
+    // Pop any remaining operators in the stack
+    while (!s.empty()) {
+        postfix += s.top();
+        s.pop();
+    }
+
+    return postfix;
+}
+
+// Function to convert infix to prefix
+string infixToPrefix(const string& infix) {
+    string reversedInfix = infix;
+    reverse(reversedInfix.begin(), reversedInfix.end());
+
+    // Replace '(' with ')' and vice versa
+    for (char& ch : reversedInfix) {
+        if (ch == '(') ch = ')';
+        else if (ch == ')') ch = '(';
+    }
+
+    // Convert the reversed infix expression to postfix
+    string reversedPostfix = infixToPostfix(reversedInfix);
+
+    // Reverse the postfix expression to get the prefix expression
+    string prefix = reversedPostfix;
+    reverse(prefix.begin(), prefix.end());
+
+    return prefix;
+}
+
+int main() {
+    string infix;
+
+    cout << "Enter an infix expression: ";
+    cin >> infix;
+
+    string postfix = infixToPostfix(infix);
+    string prefix = infixToPrefix(infix);
+
+    cout << "Postfix expression: " << postfix << endl;
+    cout << "Prefix expression: " << prefix << endl;
+
+    return 0;
+}
+
+
+6.	Pizza parlor accepting maximum M orders. Orders are served in first come first served basis. Order once placed cannot be cancelled. Write C/C++ program to simulate the system using circular queue using array
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+class CircularQueue {
+private:
+    int front; // Points to the first order
+    int rear;  // Points to the last order
+    int size;  // Maximum size of the queue
+    int* queue; // Array to store orders
+    int count; // Number of orders currently in the queue
+
+public:
+    // Constructor to initialize the queue
+    CircularQueue(int maxSize) {
+        size = maxSize;
+        queue = new int[size];
+        front = -1;
+        rear = -1;
+        count = 0;
+    }
+
+    // Destructor to free allocated memory
+    ~CircularQueue() {
+        delete[] queue;
+    }
+
+    // Function to check if the queue is full
+    bool isFull() {
+        return count == size;
+    }
+
+    // Function to check if the queue is empty
+    bool isEmpty() {
+        return count == 0;
+    }
+
+    // Function to place an order (enqueue operation)
+    void placeOrder(int order) {
+        if (isFull()) {
+            cout << "Order queue is full! Cannot place more orders." << endl;
+            return;
+        }
+        if (isEmpty()) {
+            front = 0; // Initialize front on first insertion
+        }
+        rear = (rear + 1) % size; // Circular increment of rear
+        queue[rear] = order;
+        count++;
+        cout << "Order " << order << " placed successfully!" << endl;
+    }
+
+    // Function to serve an order (dequeue operation)
+    void serveOrder() {
+        if (isEmpty()) {
+            cout << "No orders to serve!" << endl;
+            return;
+        }
+        cout << "Order " << queue[front] << " served!" << endl;
+        front = (front + 1) % size; // Circular increment of front
+        count--;
+        if (isEmpty()) { // Reset front and rear when the queue becomes empty
+            front = -1;
+            rear = -1;
+        }
+    }
+
+    // Function to display the current orders in the queue
+    void displayOrders() {
+        if (isEmpty()) {
+            cout << "No orders in the queue!" << endl;
+            return;
+        }
+        cout << "Current orders: ";
+        for (int i = 0; i < count; i++) {
+            cout << queue[(front + i) % size] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    int maxOrders, choice, orderNumber;
+
+    cout << "Enter the maximum number of orders the system can handle: ";
+    cin >> maxOrders;
+
+    CircularQueue orderQueue(maxOrders);
+
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Place Order" << endl;
+        cout << "2. Serve Order" << endl;
+        cout << "3. Display Orders" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the order number to place: ";
+                cin >> orderNumber;
+                orderQueue.placeOrder(orderNumber);
+                break;
+            case 2:
+                orderQueue.serveOrder();
+                break;
+            case 3:
+                orderQueue.displayOrders();
+                break;
+            case 4:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+7.	Represent graph using adjacency list/adjacency matrix and perform Depth First Search.
+
+
+Ans
+
+
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+// Graph representation using Adjacency Matrix
+class GraphMatrix {
+private:
+    vector<vector<int>> adjMatrix;
+    int vertices;
+
+public:
+    // Constructor to initialize the adjacency matrix
+    GraphMatrix(int v) : vertices(v) {
+        adjMatrix = vector<vector<int>>(v, vector<int>(v, 0));
+    }
+
+    // Add an edge to the graph
+    void addEdge(int u, int v) {
+        adjMatrix[u][v] = 1;
+        adjMatrix[v][u] = 1; // Undirected graph
+    }
+
+    // Perform DFS using stack (iterative)
+    void DFS(int start) {
+        vector<bool> visited(vertices, false);
+        stack<int> s;
+        s.push(start);
+
+        cout << "DFS Traversal (Adjacency Matrix): ";
+        while (!s.empty()) {
+            int current = s.top();
+            s.pop();
+
+            if (!visited[current]) {
+                cout << current << " ";
+                visited[current] = true;
+
+                // Push adjacent vertices in reverse order for proper traversal
+                for (int i = vertices - 1; i >= 0; i--) {
+                    if (adjMatrix[current][i] && !visited[i]) {
+                        s.push(i);
+                    }
+                }
+            }
+        }
+        cout << endl;
+    }
+};
+
+// Graph representation using Adjacency List
+class GraphList {
+private:
+    vector<vector<int>> adjList;
+    int vertices;
+
+public:
+    // Constructor to initialize the adjacency list
+    GraphList(int v) : vertices(v) {
+        adjList.resize(v);
+    }
+
+    // Add an edge to the graph
+    void addEdge(int u, int v) {
+        adjList[u].push_back(v);
+        adjList[v].push_back(u); // Undirected graph
+    }
+
+    // Perform DFS recursively
+    void DFSUtil(int current, vector<bool>& visited) {
+        cout << current << " ";
+        visited[current] = true;
+
+        for (int neighbor : adjList[current]) {
+            if (!visited[neighbor]) {
+                DFSUtil(neighbor, visited);
+            }
+        }
+    }
+
+    // Wrapper for DFS
+    void DFS(int start) {
+        vector<bool> visited(vertices, false);
+        cout << "DFS Traversal (Adjacency List): ";
+        DFSUtil(start, visited);
+        cout << endl;
+    }
+};
+
+int main() {
+    int vertices, edges, u, v, start;
+
+    cout << "Enter the number of vertices: ";
+    cin >> vertices;
+    cout << "Enter the number of edges: ";
+    cin >> edges;
+
+    // Create graph using adjacency matrix
+    GraphMatrix graphMatrix(vertices);
+
+    // Create graph using adjacency list
+    GraphList graphList(vertices);
+
+    cout << "Enter the edges (u v):" << endl;
+    for (int i = 0; i < edges; i++) {
+        cin >> u >> v;
+        graphMatrix.addEdge(u, v);
+        graphList.addEdge(u, v);
+    }
+
+    cout << "Enter the starting vertex for DFS: ";
+    cin >> start;
+
+    // Perform DFS using adjacency matrix
+    graphMatrix.DFS(start);
+
+    // Perform DFS using adjacency list
+    graphList.DFS(start);
+
+    return 0;
+}
+
+
+8.	Create binary tree. Find height of the tree and print leaf nodes. Find mirror image, print original and mirror image using level-wise printing.
+
+
+Ans
+
+
+
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+// Graph representation using Adjacency Matrix
+class GraphMatrix {
+private:
+    vector<vector<int>> adjMatrix;
+    int vertices;
+
+public:
+    // Constructor to initialize the adjacency matrix
+    GraphMatrix(int v) : vertices(v) {
+        adjMatrix = vector<vector<int>>(v, vector<int>(v, 0));
+    }
+
+    // Add an edge to the graph
+    void addEdge(int u, int v) {
+        adjMatrix[u][v] = 1;
+        adjMatrix[v][u] = 1; // Undirected graph
+    }
+
+    // Perform DFS using stack (iterative)
+    void DFS(int start) {
+        vector<bool> visited(vertices, false);
+        stack<int> s;
+        s.push(start);
+
+        cout << "DFS Traversal (Adjacency Matrix): ";
+        while (!s.empty()) {
+            int current = s.top();
+            s.pop();
+
+            if (!visited[current]) {
+                cout << current << " ";
+                visited[current] = true;
+
+                // Push adjacent vertices in reverse order for proper traversal
+                for (int i = vertices - 1; i >= 0; i--) {
+                    if (adjMatrix[current][i] && !visited[i]) {
+                        s.push(i);
+                    }
+                }
+            }
+        }
+        cout << endl;
+    }
+};
+
+// Graph representation using Adjacency List
+class GraphList {
+private:
+    vector<vector<int>> adjList;
+    int vertices;
+
+public:
+    // Constructor to initialize the adjacency list
+    GraphList(int v) : vertices(v) {
+        adjList.resize(v);
+    }
+
+    // Add an edge to the graph
+    void addEdge(int u, int v) {
+        adjList[u].push_back(v);
+        adjList[v].push_back(u); // Undirected graph
+    }
+
+    // Perform DFS recursively
+    void DFSUtil(int current, vector<bool>& visited) {
+        cout << current << " ";
+        visited[current] = true;
+
+        for (int neighbor : adjList[current]) {
+            if (!visited[neighbor]) {
+                DFSUtil(neighbor, visited);
+            }
+        }
+    }
+
+    // Wrapper for DFS
+    void DFS(int start) {
+        vector<bool> visited(vertices, false);
+        cout << "DFS Traversal (Adjacency List): ";
+        DFSUtil(start, visited);
+        cout << endl;
+    }
+};
+
+int main() {
+    int vertices, edges, u, v, start;
+
+    cout << "Enter the number of vertices: ";
+    cin >> vertices;
+    cout << "Enter the number of edges: ";
+    cin >> edges;
+
+    // Create graph using adjacency matrix
+    GraphMatrix graphMatrix(vertices);
+
+    // Create graph using adjacency list
+    GraphList graphList(vertices);
+
+    cout << "Enter the edges (u v):" << endl;
+    for (int i = 0; i < edges; i++) {
+        cin >> u >> v;
+        graphMatrix.addEdge(u, v);
+        graphList.addEdge(u, v);
+    }
+
+    cout << "Enter the starting vertex for DFS: ";
+    cin >> start;
+
+    // Perform DFS using adjacency matrix
+    graphMatrix.DFS(start);
+
+    // Perform DFS using adjacency list
+    graphList.DFS(start);
+
+    return 0;
+}
+
+
+9.	Write C/C++ program to store first year percentage of students in array. Write function for sorting array of numbers in ascending order using Insertion Sort.
+
+
+Ans
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Function to perform Insertion Sort on the array
+void insertionSort(vector<float>& percentages) {
+    int n = percentages.size();
+    for (int i = 1; i < n; i++) {
+        float key = percentages[i];
+        int j = i - 1;
+
+        // Move elements that are greater than `key` one position ahead
+        while (j >= 0 && percentages[j] > key) {
+            percentages[j + 1] = percentages[j];
+            j--;
+        }
+        percentages[j + 1] = key;
+    }
+}
+
+// Function to display the array
+void display(const vector<float>& percentages) {
+    for (float percentage : percentages) {
+        cout << percentage << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of students: ";
+    cin >> n;
+
+    vector<float> percentages(n);
+    cout << "Enter the first-year percentages of students:" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> percentages[i];
+    }
+
+    cout << "Original percentages: ";
+    display(percentages);
+
+    // Sort the percentages using Insertion Sort
+    insertionSort(percentages);
+
+    cout << "Sorted percentages (ascending order): ";
+    display(percentages);
+
+    return 0;
+}
+
+
+10.	Write a program to sort the elements in an array using Bubble Sort.
+
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+// Function to perform Bubble Sort
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        bool swapped = false;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap arr[j] and arr[j+1]
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        // If no two elements were swapped, the array is sorted
+        if (!swapped) break;
+    }
+}
+
+// Function to display the array
+void displayArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of elements in the array: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Enter the elements of the array:" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    cout << "Original array: ";
+    displayArray(arr, n);
+
+    // Sort the array using Bubble Sort
+    bubbleSort(arr, n);
+
+    cout << "Sorted array (ascending order): ";
+    displayArray(arr, n);
+
+    return 0;
+}
+
+
+
+11.	Write a program to search a given element in an array using Binary Search.
+
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+// Function to perform Binary Search
+int binarySearch(int arr[], int n, int target) {
+    int left = 0, right = n - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2; // To avoid overflow
+
+        // Check if the target is at the mid
+        if (arr[mid] == target) {
+            return mid; // Return the index of the target
+        }
+
+        // If the target is greater, ignore the left half
+        if (arr[mid] < target) {
+            left = mid + 1;
+        }
+        // If the target is smaller, ignore the right half
+        else {
+            right = mid - 1;
+        }
+    }
+
+    return -1; // Target not found
+}
+
+// Function to display the array
+void displayArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int n, target;
+
+    cout << "Enter the number of elements in the array: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Enter the elements of the array in sorted order:" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    cout << "Array: ";
+    displayArray(arr, n);
+
+    cout << "Enter the element to search for: ";
+    cin >> target;
+
+    // Perform Binary Search
+    int result = binarySearch(arr, n, target);
+
+    if (result != -1) {
+        cout << "Element found at index: " << result << endl;
+    } else {
+        cout << "Element not found in the array." << endl;
+    }
+
+    return 0;
+}
+
+
+
+12.	Write a C/C++ program to implement Kruskal minimum cost spanning tree algorithm
+
+
+Ans
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Structure to represent an edge
+struct Edge {
+    int src, dest, weight;
+};
+
+// Class to represent the Disjoint Set (Union-Find)
+class DisjointSet {
+public:
+    vector<int> parent, rank;
+
+    // Constructor to initialize the parent and rank vectors
+    DisjointSet(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    // Find function with path compression
+    int find(int i) {
+        if (parent[i] != i) {
+            parent[i] = find(parent[i]); // Path compression
+        }
+        return parent[i];
+    }
+
+    // Union function with union by rank
+    void unionSets(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+
+        // Union by rank
+        if (rootX != rootY) {
+            if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+};
+
+// Function to implement Kruskal's algorithm
+void kruskalMST(vector<Edge>& edges, int V) {
+    // Sort edges by weight
+    sort(edges.begin(), edges.end(), [](Edge& e1, Edge& e2) {
+        return e1.weight < e2.weight;
+    });
+
+    DisjointSet ds(V);
+    vector<Edge> mst;
+
+    // Iterate over sorted edges and apply union-find
+    for (Edge& edge : edges) {
+        int src = edge.src;
+        int dest = edge.dest;
+
+        // Check if the current edge forms a cycle
+        if (ds.find(src) != ds.find(dest)) {
+            mst.push_back(edge);
+            ds.unionSets(src, dest);
+        }
+    }
+
+    // Print the MST
+    cout << "Edges in the Minimum Spanning Tree (MST):" << endl;
+    int mstWeight = 0;
+    for (Edge& edge : mst) {
+        cout << "Edge (" << edge.src << " - " << edge.dest << ") with weight: " << edge.weight << endl;
+        mstWeight += edge.weight;
+    }
+    cout << "Total weight of MST: " << mstWeight << endl;
+}
+
+int main() {
+    int V, E;
+
+    // Input the number of vertices and edges
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+    cout << "Enter the number of edges: ";
+    cin >> E;
+
+    vector<Edge> edges(E);
+
+    // Input the edges
+    cout << "Enter the edges (src, dest, weight):" << endl;
+    for (int i = 0; i < E; i++) {
+        cin >> edges[i].src >> edges[i].dest >> edges[i].weight;
+    }
+
+    // Run Kruskal's algorithm to find the MST
+    kruskalMST(edges, V);
+
+    return 0;
+}
+
+
+
+13.	Write a program to implement Pattern Matching algorithm.
+
+
+Ans
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Naive Pattern Matching Algorithm
+void naivePatternMatching(const string& text, const string& pattern) {
+    int n = text.length();
+    int m = pattern.length();
+
+    // Loop through the text to find a match
+    for (int i = 0; i <= n - m; i++) {
+        int j;
+        
+        // Check if pattern matches from position i in the text
+        for (j = 0; j < m; j++) {
+            if (text[i + j] != pattern[j]) {
+                break;
+            }
+        }
+
+        // If the pattern was found
+        if (j == m) {
+            cout << "Pattern found at index " << i << endl;
+        }
+    }
+}
+
+int main() {
+    string text, pattern;
+
+    // Input the text and the pattern
+    cout << "Enter the text: ";
+    getline(cin, text);
+    cout << "Enter the pattern to search for: ";
+    getline(cin, pattern);
+
+    // Perform pattern matching
+    naivePatternMatching(text, pattern);
+
+    return 0;
+}
+
+
+14.	Write a menu driven program to perform operations on doubly linked list.
+
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+// Node structure for the doubly linked list
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+    
+    Node(int value) : data(value), prev(nullptr), next(nullptr) {}
+};
+
+// Class for Doubly Linked List
+class DoublyLinkedList {
+public:
+    Node* head;
+    
+    DoublyLinkedList() : head(nullptr) {}
+
+    // Insert at the beginning
+    void insertAtBeginning(int data) {
+        Node* newNode = new Node(data);
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+        cout << "Node inserted at the beginning." << endl;
+    }
+
+    // Insert at the end
+    void insertAtEnd(int data) {
+        Node* newNode = new Node(data);
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+            newNode->prev = temp;
+        }
+        cout << "Node inserted at the end." << endl;
+    }
+
+    // Insert after a given node
+    void insertAfter(int prevData, int data) {
+        Node* temp = head;
+        while (temp != nullptr && temp->data != prevData) {
+            temp = temp->next;
+        }
+        
+        if (temp != nullptr) {
+            Node* newNode = new Node(data);
+            newNode->next = temp->next;
+            if (temp->next != nullptr) {
+                temp->next->prev = newNode;
+            }
+            temp->next = newNode;
+            newNode->prev = temp;
+            cout << "Node inserted after " << prevData << "." << endl;
+        } else {
+            cout << "Node with data " << prevData << " not found." << endl;
+        }
+    }
+
+    // Delete from the beginning
+    void deleteFromBeginning() {
+        if (head == nullptr) {
+            cout << "List is empty, cannot delete." << endl;
+        } else {
+            Node* temp = head;
+            head = head->next;
+            if (head != nullptr) {
+                head->prev = nullptr;
+            }
+            delete temp;
+            cout << "Node deleted from the beginning." << endl;
+        }
+    }
+
+    // Delete from the end
+    void deleteFromEnd() {
+        if (head == nullptr) {
+            cout << "List is empty, cannot delete." << endl;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            if (temp->prev != nullptr) {
+                temp->prev->next = nullptr;
+            } else {
+                head = nullptr; // Only one node in the list
+            }
+            delete temp;
+            cout << "Node deleted from the end." << endl;
+        }
+    }
+
+    // Delete a specific node
+    void deleteNode(int data) {
+        Node* temp = head;
+        while (temp != nullptr && temp->data != data) {
+            temp = temp->next;
+        }
+        
+        if (temp != nullptr) {
+            if (temp->prev != nullptr) {
+                temp->prev->next = temp->next;
+            } else {
+                head = temp->next; // If deleting the head node
+            }
+            if (temp->next != nullptr) {
+                temp->next->prev = temp->prev;
+            }
+            delete temp;
+            cout << "Node with data " << data << " deleted." << endl;
+        } else {
+            cout << "Node with data " << data << " not found." << endl;
+        }
+    }
+
+    // Display the list in forward direction
+    void displayForward() {
+        if (head == nullptr) {
+            cout << "List is empty." << endl;
+        } else {
+            Node* temp = head;
+            cout << "List in forward direction: ";
+            while (temp != nullptr) {
+                cout << temp->data << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+    }
+
+    // Display the list in reverse direction
+    void displayReverse() {
+        if (head == nullptr) {
+            cout << "List is empty." << endl;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            cout << "List in reverse direction: ";
+            while (temp != nullptr) {
+                cout << temp->data << " ";
+                temp = temp->prev;
+            }
+            cout << endl;
+        }
+    }
+};
+
+// Main function with menu-driven options
+int main() {
+    DoublyLinkedList list;
+    int choice, data, prevData;
+    
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Insert at the beginning" << endl;
+        cout << "2. Insert at the end" << endl;
+        cout << "3. Insert after a node" << endl;
+        cout << "4. Delete from the beginning" << endl;
+        cout << "5. Delete from the end" << endl;
+        cout << "6. Delete a specific node" << endl;
+        cout << "7. Display the list in forward direction" << endl;
+        cout << "8. Display the list in reverse direction" << endl;
+        cout << "9. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the data to insert at the beginning: ";
+                cin >> data;
+                list.insertAtBeginning(data);
+                break;
+            case 2:
+                cout << "Enter the data to insert at the end: ";
+                cin >> data;
+                list.insertAtEnd(data);
+                break;
+            case 3:
+                cout << "Enter the data to insert after: ";
+                cin >> prevData;
+                cout << "Enter the data to insert: ";
+                cin >> data;
+                list.insertAfter(prevData, data);
+                break;
+            case 4:
+                list.deleteFromBeginning();
+                break;
+            case 5:
+                list.deleteFromEnd();
+                break;
+            case 6:
+                cout << "Enter the data to delete: ";
+                cin >> data;
+                list.deleteNode(data);
+                break;
+            case 7:
+                list.displayForward();
+                break;
+            case 8:
+                list.displayReverse();
+                break;
+            case 9:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    } while (choice != 9);
+
+    return 0;
+}
+
+
+
+14.	Write a menu driven program to perform operations on doubly linked list.
+
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Node structure for doubly linked list
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+    
+    Node(int value) : data(value), prev(nullptr), next(nullptr) {}
+};
+
+// Class for Doubly Linked List
+class DoublyLinkedList {
+public:
+    Node* head;
+    
+    DoublyLinkedList() : head(nullptr) {}
+
+    // Insert at the beginning
+    void insertAtBeginning(int data) {
+        Node* newNode = new Node(data);
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+        cout << "Node inserted at the beginning." << endl;
+    }
+
+    // Insert at the end
+    void insertAtEnd(int data) {
+        Node* newNode = new Node(data);
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+            newNode->prev = temp;
+        }
+        cout << "Node inserted at the end." << endl;
+    }
+
+    // Insert after a given node
+    void insertAfter(int prevData, int data) {
+        Node* temp = head;
+        while (temp != nullptr && temp->data != prevData) {
+            temp = temp->next;
+        }
+        
+        if (temp != nullptr) {
+            Node* newNode = new Node(data);
+            newNode->next = temp->next;
+            if (temp->next != nullptr) {
+                temp->next->prev = newNode;
+            }
+            temp->next = newNode;
+            newNode->prev = temp;
+            cout << "Node inserted after " << prevData << "." << endl;
+        } else {
+            cout << "Node with data " << prevData << " not found." << endl;
+        }
+    }
+
+    // Delete from the beginning
+    void deleteFromBeginning() {
+        if (head == nullptr) {
+            cout << "List is empty, cannot delete." << endl;
+        } else {
+            Node* temp = head;
+            head = head->next;
+            if (head != nullptr) {
+                head->prev = nullptr;
+            }
+            delete temp;
+            cout << "Node deleted from the beginning." << endl;
+        }
+    }
+
+    // Delete from the end
+    void deleteFromEnd() {
+        if (head == nullptr) {
+            cout << "List is empty, cannot delete." << endl;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            if (temp->prev != nullptr) {
+                temp->prev->next = nullptr;
+            } else {
+                head = nullptr; // Only one node in the list
+            }
+            delete temp;
+            cout << "Node deleted from the end." << endl;
+        }
+    }
+
+    // Delete a specific node
+    void deleteNode(int data) {
+        Node* temp = head;
+        while (temp != nullptr && temp->data != data) {
+            temp = temp->next;
+        }
+        
+        if (temp != nullptr) {
+            if (temp->prev != nullptr) {
+                temp->prev->next = temp->next;
+            } else {
+                head = temp->next; // If deleting the head node
+            }
+            if (temp->next != nullptr) {
+                temp->next->prev = temp->prev;
+            }
+            delete temp;
+            cout << "Node with data " << data << " deleted." << endl;
+        } else {
+            cout << "Node with data " << data << " not found." << endl;
+        }
+    }
+
+    // Display the list in forward direction
+    void displayForward() {
+        if (head == nullptr) {
+            cout << "List is empty." << endl;
+        } else {
+            Node* temp = head;
+            cout << "List in forward direction: ";
+            while (temp != nullptr) {
+                cout << temp->data << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+    }
+
+    // Display the list in reverse direction
+    void displayReverse() {
+        if (head == nullptr) {
+            cout << "List is empty." << endl;
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            cout << "List in reverse direction: ";
+            while (temp != nullptr) {
+                cout << temp->data << " ";
+                temp = temp->prev;
+            }
+            cout << endl;
+        }
+    }
+};
+
+// Main function with menu-driven options
+int main() {
+    DoublyLinkedList list;
+    int choice, data, prevData;
+    
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Insert at the beginning" << endl;
+        cout << "2. Insert at the end" << endl;
+        cout << "3. Insert after a node" << endl;
+        cout << "4. Delete from the beginning" << endl;
+        cout << "5. Delete from the end" << endl;
+        cout << "6. Delete a specific node" << endl;
+        cout << "7. Display the list in forward direction" << endl;
+        cout << "8. Display the list in reverse direction" << endl;
+        cout << "9. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the data to insert at the beginning: ";
+                cin >> data;
+                list.insertAtBeginning(data);
+                break;
+            case 2:
+                cout << "Enter the data to insert at the end: ";
+                cin >> data;
+                list.insertAtEnd(data);
+                break;
+            case 3:
+                cout << "Enter the data to insert after: ";
+                cin >> prevData;
+                cout << "Enter the data to insert: ";
+                cin >> data;
+                list.insertAfter(prevData, data);
+                break;
+            case 4:
+                list.deleteFromBeginning();
+                break;
+            case 5:
+                list.deleteFromEnd();
+                break;
+            case 6:
+                cout << "Enter the data to delete: ";
+                cin >> data;
+                list.deleteNode(data);
+                break;
+            case 7:
+                list.displayForward();
+                break;
+            case 8:
+                list.displayReverse();
+                break;
+            case 9:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    } while (choice != 9);
+
+    return 0;
+}
+
+
+15.	Implement circular linked list using array.
+
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+#define MAX 5  // Maximum size of the circular linked list
+
+class CircularLinkedList {
+private:
+    int arr[MAX];  // Array to hold the list elements
+    int front;     // Index of the front of the list
+    int rear;      // Index of the rear of the list
+    int count;     // Keeps track of the current number of elements
+
+public:
+    CircularLinkedList() : front(-1), rear(-1), count(0) {}
+
+    // Check if the list is empty
+    bool isEmpty() {
+        return count == 0;
+    }
+
+    // Check if the list is full
+    bool isFull() {
+        return count == MAX;
+    }
+
+    // Insert at the end (rear)
+    void insertAtEnd(int data) {
+        if (isFull()) {
+            cout << "List is full, cannot insert." << endl;
+            return;
+        }
+
+        if (isEmpty()) {
+            front = rear = 0;  // Initialize both front and rear
+        } else {
+            rear = (rear + 1) % MAX;  // Circular increment
+        }
+        arr[rear] = data;
+        count++;
+        cout << "Inserted " << data << " at the end." << endl;
+    }
+
+    // Delete from the front
+    void deleteFromFront() {
+        if (isEmpty()) {
+            cout << "List is empty, cannot delete." << endl;
+            return;
+        }
+
+        cout << "Deleted " << arr[front] << " from the front." << endl;
+        if (front == rear) {
+            front = rear = -1;  // List becomes empty
+        } else {
+            front = (front + 1) % MAX;  // Circular increment
+        }
+        count--;
+    }
+
+    // Display the list
+    void display() {
+        if (isEmpty()) {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        cout << "Circular Linked List: ";
+        int i = front;
+        for (int j = 0; j < count; j++) {
+            cout << arr[i] << " ";
+            i = (i + 1) % MAX;  // Circular increment
+        }
+        cout << endl;
+    }
+
+    // Delete a specific element
+    void deleteElement(int data) {
+        if (isEmpty()) {
+            cout << "List is empty, cannot delete." << endl;
+            return;
+        }
+
+        int temp = front;
+        bool found = false;
+        for (int i = 0; i < count; i++) {
+            if (arr[temp] == data) {
+                found = true;
+                break;
+            }
+            temp = (temp + 1) % MAX;
+        }
+
+        if (!found) {
+            cout << "Element " << data << " not found." << endl;
+            return;
+        }
+
+        // If the element is found, shift all elements after it
+        int i = temp;
+        while (i != rear) {
+            arr[i] = arr[(i + 1) % MAX];
+            i = (i + 1) % MAX;
+        }
+        rear = (rear - 1 + MAX) % MAX;
+        count--;
+        cout << "Element " << data << " deleted." << endl;
+    }
+};
+
+// Main function with menu-driven options
+int main() {
+    CircularLinkedList list;
+    int choice, data;
+
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Insert at the end" << endl;
+        cout << "2. Delete from the front" << endl;
+        cout << "3. Display the list" << endl;
+        cout << "4. Delete a specific element" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the data to insert: ";
+                cin >> data;
+                list.insertAtEnd(data);
+                break;
+            case 2:
+                list.deleteFromFront();
+                break;
+            case 3:
+                list.display();
+                break;
+            case 4:
+                cout << "Enter the data to delete: ";
+                cin >> data;
+                list.deleteElement(data);
+                break;
+            case 5:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+
+16.	Write a program to sort the elements in an array using Insertion Sort.
+
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+// Function to perform Insertion Sort
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        // Move elements of arr[0..i-1], that are greater than key, to one position ahead of their current position
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+// Function to print an array
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+// Main function to test the Insertion Sort algorithm
+int main() {
+    int arr[] = {12, 11, 13, 5, 6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Original array: ";
+    printArray(arr, n);
+
+    insertionSort(arr, n);
+
+    cout << "Sorted array: ";
+    printArray(arr, n);
+
+    return 0;
+}
+
+
+17.	Implement queue using array or linked list.
+
+
+Ans
+
+#include <iostream>
+using namespace std;
+
+#define MAX 5  // Maximum size of the queue
+
+class Queue {
+private:
+    int arr[MAX];  // Array to hold the queue elements
+    int front;     // Front index of the queue
+    int rear;      // Rear index of the queue
+
+public:
+    Queue() : front(-1), rear(-1) {}
+
+    // Check if the queue is empty
+    bool isEmpty() {
+        return front == -1;
+    }
+
+    // Check if the queue is full
+    bool isFull() {
+        return (rear + 1) % MAX == front;
+    }
+
+    // Enqueue operation: Add element at the rear
+    void enqueue(int data) {
+        if (isFull()) {
+            cout << "Queue is full, cannot enqueue." << endl;
+            return;
+        }
+
+        if (isEmpty()) {
+            front = rear = 0;  // If queue is empty, both front and rear are set to 0
+        } else {
+            rear = (rear + 1) % MAX;  // Circular increment
+        }
+
+        arr[rear] = data;
+        cout << "Enqueued " << data << endl;
+    }
+
+    // Dequeue operation: Remove element from the front
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty, cannot dequeue." << endl;
+            return;
+        }
+
+        cout << "Dequeued " << arr[front] << endl;
+        if (front == rear) {
+            front = rear = -1;  // If the queue becomes empty, reset front and rear
+        } else {
+            front = (front + 1) % MAX;  // Circular increment
+        }
+    }
+
+    // Display the elements of the queue
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        cout << "Queue elements: ";
+        int i = front;
+        while (i != rear) {
+            cout << arr[i] << " ";
+            i = (i + 1) % MAX;  // Circular increment
+        }
+        cout << arr[rear] << endl;  // Print the rear element
+    }
+};
+
+// Main function with menu-driven options
+int main() {
+    Queue q;
+    int choice, data;
+
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Enqueue" << endl;
+        cout << "2. Dequeue" << endl;
+        cout << "3. Display Queue" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the data to enqueue: ";
+                cin >> data;
+                q.enqueue(data);
+                break;
+            case 2:
+                q.dequeue();
+                break;
+            case 3:
+                q.display();
+                break;
+            case 4:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+18.	Write a program to search a given element in an array using Linear Search.
+
+Ans
+
+
+#include <iostream>
+using namespace std;
+
+// Function to perform Linear Search
+int linearSearch(int arr[], int n, int target) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == target) {
+            return i;  // Return the index if element is found
+        }
+    }
+    return -1;  // Return -1 if element is not found
+}
+
+// Main function to test Linear Search
+int main() {
+    int arr[] = {23, 45, 67, 12, 89, 34, 78};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target;
+
+    cout << "Enter the element to search: ";
+    cin >> target;
+
+    int result = linearSearch(arr, n, target);
+
+    if (result != -1) {
+        cout << "Element " << target << " found at index " << result << endl;
+    } else {
+        cout << "Element " << target << " not found in the array." << endl;
+    }
+
+    return 0;
+}
+
+
+19.	Represent graph using adjacency list/adjacency matrix and perform Breath First Search.
+
+Ans
+
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+// Graph class to represent the graph using an adjacency list
+class Graph {
+private:
+    int V;  // Number of vertices
+    vector<vector<int>> adjList;  // Adjacency list to store the graph
+
+public:
+    // Constructor to initialize the graph with V vertices
+    Graph(int V) {
+        this->V = V;
+        adjList.resize(V);
+    }
+
+    // Add an edge to the graph (undirected graph)
+    void addEdge(int u, int v) {
+        adjList[u].push_back(v);
+        adjList[v].push_back(u);
+    }
+
+    // Perform BFS starting from vertex 'start'
+    void BFS(int start) {
+        vector<bool> visited(V, false);  // To keep track of visited nodes
+        queue<int> q;  // Queue to implement BFS
+
+        visited[start] = true;
+        q.push(start);
+
+        cout << "BFS traversal starting from node " << start << ": ";
+
+        while (!q.empty()) {
+            int node = q.front();  // Get the front node of the queue
+            cout << node << " ";
+            q.pop();
+
+            // Explore the neighbors of the current node
+            for (int neighbor : adjList[node]) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    q.push(neighbor);
+                }
+            }
+        }
+        cout << endl;
+    }
+
+    // Function to print the adjacency list of the graph
+    void printGraph() {
+        for (int i = 0; i < V; i++) {
+            cout << "Vertex " << i << ": ";
+            for (int neighbor : adjList[i]) {
+                cout << neighbor << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    Graph g(6);  // Create a graph with 6 vertices (0 to 5)
+
+    // Adding edges to the graph
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 3);
+    g.addEdge(1, 4);
+    g.addEdge(2, 5);
+
+    // Print the adjacency list representation of the graph
+    cout << "Graph (Adjacency List):" << endl;
+    g.printGraph();
+
+    // Perform BFS starting from vertex 0
+    g.BFS(0);
+
+    return 0;
+}
+
+
+
+
